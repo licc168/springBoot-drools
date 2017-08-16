@@ -1,0 +1,40 @@
+
+
+package com.licc.drools
+import  com.licc.drools.domain.Message
+import  com.licc.drools.enums.EnumMessage
+import  com.licc.drools.service.MessageService
+import  com.licc.drools.util.SpringContext
+import  com.licc.drools.util.MessageUtil
+dialect  "mvel"
+//函数
+function void outMsg(String name) {
+  System.out.println( "函数： "+name+"!");
+}
+
+
+rule "HelloWorld"
+    dialect "mvel"
+    when
+        m : Message(status == EnumMessage.HELLO.code, message : message )
+    then
+       //调用 service
+        MessageService messageService = SpringContext.getBean(MessageService.class);
+        messageService.outMsg(message);
+
+        // 调用静态方法
+        MessageUtil.outMsg(message);
+
+        //调用函数
+        outMsg(message);
+
+    modify ( m ) { message = "Goodbye cruel world",status = EnumMessage.BYE.getCode() };
+end
+
+rule GoodBye
+    dialect "java"
+    when
+        Message( status == EnumMessage.BYE.getCode(), message : message )
+    then
+        System.out.println( message );
+end
