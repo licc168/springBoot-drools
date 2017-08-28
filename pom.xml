@@ -7,12 +7,16 @@
   <groupId>com.licc.drools</groupId>
   <artifactId>SpringBoot-drools</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>1.5.1.RELEASE</version>
     <relativePath /> <!-- lookup parent from repository -->
   </parent>
+  <properties>
+    <java.version>1.8</java.version>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -59,15 +63,35 @@
 
 
   </dependencies>
-  <packaging>kjar</packaging>
+
+
   <build>
     <plugins>
+
+
+
       <plugin>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-maven-plugin</artifactId>
-        <version>7.0.0.Beta6</version>
-        <extensions>true</extensions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
       </plugin>
+      <!--spring 热部署  mvn spring-boot:run-->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>springloaded</artifactId>
+            <version>1.2.6.RELEASE</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+
     </plugins>
   </build>
 
