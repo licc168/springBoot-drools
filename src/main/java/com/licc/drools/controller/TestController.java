@@ -1,8 +1,10 @@
 package com.licc.drools.controller;
 
 import com.sun.org.apache.regexp.internal.RE;
+import javax.annotation.Resource;
 import org.kie.api.cdi.KSession;
 import org.kie.api.runtime.KieSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +17,7 @@ import com.licc.drools.enums.EnumMessage;
 @RequestMapping("/")
 public class TestController {
 
-    @KSession("ksession")
+    @Autowired
     private KieSession kSession;
 
     @RequestMapping("/index")
